@@ -24,6 +24,24 @@ namespace PokemonInheritence
                 new DewGong(),
                 new PrimeApe()
         };
+        static bool playAgain()
+        {
+            Console.WriteLine("Would you like to play again y/n");
+            string decision = Console.ReadLine();
+            if (decision == "y")
+            {
+                return true;
+            }
+            else if (decision == "n")
+            {
+                return false;
+            }
+            else
+            { 
+                Console.WriteLine("Invalid! Auto Exit!");
+                return false;
+            }
+        }
         static bool CheckDead(int userPokemon, int aiPokemon)
         {
             if (pokemons[userPokemon].Health <= 0)
@@ -45,32 +63,23 @@ namespace PokemonInheritence
         }
         static void AiFight(int userPokemon, int aipokemon, int randommove)
         {
-
-            if (randommove == 0)
+            int damagetouser = 0;
+            switch (randommove)
             {
-                int damagetouser = pokemons[aipokemon].Move1();
-                Console.WriteLine($"Opponent pokemon elected to use move 1");
-                pokemons[userPokemon].Health = pokemons[userPokemon].Health - damagetouser;
-                CheckDead(userPokemon, aipokemon);
-              
-               
+                case 1:
+                    damagetouser = pokemons[aipokemon].Move1();
+                    Console.WriteLine($"Opponent pokemon elected to use move 1");
+                    break;
+                case 2:        
+                    damagetouser = pokemons[aipokemon].Move2();
+                    Console.WriteLine($"Opponent pokemon elected to use move 2");
+                    break;
+                case 3:        
+                    damagetouser = pokemons[aipokemon].Move3();
+                    Console.WriteLine($"Opponent pokemon elected to use move 3");
+                    break;
             }
-            if (randommove == 1)
-            {
-                int damagetouser = pokemons[aipokemon].Move2();
-                Console.WriteLine($"Opponent pokemon elected to use move 2");
-                pokemons[userPokemon].Health = pokemons[userPokemon].Health - damagetouser;
-                CheckDead(userPokemon, aipokemon);
-                
-            }
-            if (randommove == 2)
-            {
-                int damagetouser = pokemons[aipokemon].Move3();
-                Console.WriteLine($"Opponent pokemon elected to use move 3");
-                pokemons[userPokemon].Health = pokemons[userPokemon].Health - damagetouser;
-                CheckDead(userPokemon, aipokemon);
-                
-            }
+            pokemons[userPokemon].Health = pokemons[userPokemon].Health - damagetouser;
         }
         
         static void Fighting(int userPokemon, int aipokemon)
@@ -78,7 +87,7 @@ namespace PokemonInheritence
             Random rand = new Random();
             int randommove = rand.Next(3);
             Console.WriteLine(pokemons[userPokemon].Print());
-            while (CheckDead(userPokemon, aipokemon))
+            while (CheckDead(userPokemon, aipokemon) == false)
             {
                 randommove = rand.Next(3);
                 Console.WriteLine(pokemons[userPokemon].MoveDisplay());
@@ -101,7 +110,7 @@ namespace PokemonInheritence
                 if (CheckDead(userPokemon, aipokemon)) break;
                 AiFight(userPokemon, aipokemon, randommove);
             }
-            //fix nikitas stupid switch if everything fails go back to if but pretty easy to remember what to do 
+
         }
         static void Main(string[] args)
         {
@@ -128,14 +137,26 @@ namespace PokemonInheritence
                     if (FighterPokemonChoice == pokemons[i].Name)
                     {
                         userchosenI = i; 
-                    }           
+                    }
+                }
+                while (userchosenI == 0 && FighterPokemonChoice != "Charizard")
+                {
+                    Console.WriteLine("Invalid! Please try again.");
+                    FighterPokemonChoice = Console.ReadLine();
+                    for (int i = 0; i < pokemons.Length; i++)
+                    {
+                        if (FighterPokemonChoice == pokemons[i].Name)
+                        {
+                            userchosenI = i;
+                        }
+                    }
                 }
                 Fighting(userchosenI, randomPokemon);
                 // Console.WriteLine("Invalid Choice Check Spelling");
             }
             else 
             {
-            //be mean and make them fight 
+            //note from 3/9/24 make sure that you finish the restart. the function is already made just make sure to place it and implemeant it.
             }
 
         }

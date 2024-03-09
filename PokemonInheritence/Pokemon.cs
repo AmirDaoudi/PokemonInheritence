@@ -24,7 +24,7 @@ namespace PokemonInheritence
         public abstract int Move1();
         public abstract int Move2();
         public abstract int Move3();
-        public string Print() => $"{Name} is a {Type} type with {Health} health.";
+        public string Print() => $"{Name} is a {Type} type.";
         public string HealthCheck() => $"{Name} has {Health} health";
         public string MoveDisplay() => $"{Name} has 3 moves move 1 does {Damage1} Damage, move 2 does {Damage2} Damage, and move 3 gives {HealthAddition} health.\nWhich move would you like to choose 1 2 or 3";
 
